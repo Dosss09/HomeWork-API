@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Exercise one</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+    <string name="title_hint">Введите данные</string>
+    <string name="txt_receive_hint">Facts about cats</string>
+    <string name="txt_translate_hint">Факты о кошках</string>
+    <string name="set_request">ОТПРАВИТЬ ЗАПРОС</string>
+    <string name="get_fact">ПОЛУЧИТЬ ФАКТ</string>
+</resources>
