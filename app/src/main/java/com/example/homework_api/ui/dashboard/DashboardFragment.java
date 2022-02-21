@@ -29,7 +29,8 @@ public class DashboardFragment extends Fragment {
 
     private FragmentDashboardBinding binding;
     private Button btn;
-    private TextView text_fact;
+    private TextView textFact;
+    final String URL_CAT_FACT_WEBSITE = "https://catfact.ninja/fact";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -40,13 +41,13 @@ public class DashboardFragment extends Fragment {
         View root = binding.getRoot();
 
         btn = binding.btnSend;
-        text_fact = binding.txtReceive;
+        textFact = binding.txtReceive;
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DownloadCatFactTask task = new DownloadCatFactTask();
-                task.execute("https://catfact.ninja/fact");
+                task.execute(URL_CAT_FACT_WEBSITE);
             }
         });
 
@@ -90,7 +91,7 @@ public class DashboardFragment extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String url = jsonObject.getString("fact");
-                text_fact.setText(url);
+                textFact.setText(url);
             } catch (JSONException e) {
                 e.printStackTrace();
             }

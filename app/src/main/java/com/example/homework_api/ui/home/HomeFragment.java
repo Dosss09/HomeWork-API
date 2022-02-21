@@ -38,7 +38,9 @@ public class HomeFragment extends Fragment {
     private EditText etView;
     private ImageView imageView;
     private Button btn;
-    private String string_cat;
+    private String stringCat;
+    final String URL_JSON = "https://cataas.com/cat?json=true";
+    final String URL_CAT_WEBSITE = "https://cataas.com";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -53,7 +55,7 @@ public class HomeFragment extends Fragment {
         imageView = binding.imgAccept;
 
         DownloadCatImageTask task = new DownloadCatImageTask();
-        task.execute("https://cataas.com/cat?json=true");
+        task.execute(URL_JSON);
 
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -68,12 +70,12 @@ public class HomeFragment extends Fragment {
                 else
                 {
                     DownloadCatImageTask task = new DownloadCatImageTask();
-                    task.execute("https://cataas.com/cat?json=true");
+                    task.execute(URL_JSON);
 
                     DownloadImageTask task_two = new DownloadImageTask();
                     Bitmap bitmap = null;
                     try {
-                        bitmap = task_two.execute(string_cat).get();
+                        bitmap = task_two.execute(stringCat).get();
                     } catch (ExecutionException e) {
                         e.printStackTrace();
                     } catch (InterruptedException e) {
@@ -126,8 +128,8 @@ public class HomeFragment extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(s);
                 String url = jsonObject.getString("url");
-                String cat_url = String.format("https://cataas.com" + url);
-                string_cat = cat_url;
+                String cat_url = String.format(URL_CAT_WEBSITE + url);
+                stringCat = cat_url;
             } catch (JSONException e) {
                 e.printStackTrace();
             }
