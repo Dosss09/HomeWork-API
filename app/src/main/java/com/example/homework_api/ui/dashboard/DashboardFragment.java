@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -25,12 +26,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements DashboardContract.View {
 
     private FragmentDashboardBinding binding;
     private Button btn;
     private TextView textFact;
-    final String URL_CAT_FACT_WEBSITE = "https://catfact.ninja/fact";
+
+    DashboardContract.Presenter presenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -43,64 +45,36 @@ public class DashboardFragment extends Fragment {
         btn = binding.btnSend;
         textFact = binding.txtReceive;
 
+        presenter = new DashboardPresenter(this);
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DownloadCatFactTask task = new DownloadCatFactTask();
-                task.execute(URL_CAT_FACT_WEBSITE);
+                presenter.uploadText();
             }
         });
 
         return root;
     }
 
-    private class DownloadCatFactTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... strings) {
-            URL url = null;
-            HttpURLConnection urlConnection = null;
-            StringBuilder result = new StringBuilder();
-            try {
-                url = new URL(strings[0]);
-                urlConnection = (HttpURLConnection) url.openConnection();
-                InputStream inputStream = urlConnection.getInputStream();
-                InputStreamReader inputStreamReader = new InputStreamReader(inputStream);
-                BufferedReader reader = new BufferedReader(inputStreamReader);
-                String line = reader.readLine();
-                while (line != null)
-                {
-                    result.append(line);
-                    line = reader.readLine();
-                }
-                return result.toString();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } finally {
-                if (urlConnection != null) {
-                    urlConnection.disconnect();
-                }
-            }
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            try {
-                JSONObject jsonObject = new JSONObject(s);
-                String url = jsonObject.getString("fact");
-                textFact.setText(url);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         binding = null;
+    }
+
+    @Override
+    public void onSuccess(String message) {
+        Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onError(String message) {
+        Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void showResult(String uploadText) {
+        textFact.setText(uploadText);
     }
 }
