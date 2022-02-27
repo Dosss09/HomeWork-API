@@ -15,7 +15,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
     DashboardContract.View view;
     final String URL = "https://catfact.ninja/fact";
-    String uploadText;
+    String uploadText;//прочитать про модификаторы доступы и их применение в java
 
     public DashboardPresenter(DashboardContract.View view) {
         this.view = view;
@@ -23,6 +23,15 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
     @Override
     public void uploadText() {
+        // Запросы должны быть вынесены в отдельную модель, например FactsRepository
+        // MVP работает следующим образом:
+        // Model это класс, отвечающий за отправку запросов/работу с бд/обработку данных
+        // View это activity/fragment, вью должно обрабатывать элементы для представления пользователю
+        // например обработку нажатия на кнопку, установку картинок/кнопок
+        // Presenter - это простой объект, связующее звено между вью и моделью
+        // презентер вызывается из вью, обрабатывает логику, вызывает модель для запросов,
+        // получает ответ и передаёт его на вью
+
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
@@ -42,6 +51,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
                     try {
                         FactJSON factJSON = new Gson().fromJson(response.body().string(), FactJSON.class);
                         uploadText = factJSON.fact;
+                        //view.showResult(factJSON.fact)
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -49,6 +59,7 @@ public class DashboardPresenter implements DashboardContract.Presenter {
             }
         });
 
-        view.showResult(uploadText);
+        view.showResult(uploadText);//метод вызывается не правильно, текст может не успеть подгрузиться в onResponse
+        //поэтому view.showResult должен вызываться только тогда, когда пришёл ответ в onResponse
     }
 }
