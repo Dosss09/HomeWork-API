@@ -32,6 +32,11 @@ public class DashboardPresenter implements DashboardContract.Presenter {
         // презентер вызывается из вью, обрабатывает логику, вызывает модель для запросов,
         // получает ответ и передаёт его на вью
 
+        //MVP https://javarush.ru/groups/posts/505-mvp-v-android-dlja-samihkh-malenjhkikh
+        //модификаторы доступа https://javarush.ru/groups/posts/1988-modifikatorih-dostupa-private-protected-default-public
+        //для того, чтобы доделать задание нужно добавить модификаторы доступа туда, где это нужно
+        //и немного лучше применить мвп шаблон, в данном случае тут не хватает модели
+
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()
