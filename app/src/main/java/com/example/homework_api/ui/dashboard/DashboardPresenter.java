@@ -14,6 +14,7 @@ import okhttp3.ResponseBody;
 public class DashboardPresenter implements DashboardContract.Presenter {
 
     DashboardContract.View view;
+    final String URL = "https://catfact.ninja/fact";
     String uploadText;
 
     public DashboardPresenter(DashboardContract.View view) {
@@ -22,7 +23,6 @@ public class DashboardPresenter implements DashboardContract.Presenter {
 
     @Override
     public void uploadText() {
-        final String URL = "https://catfact.ninja/fact";
 
         OkHttpClient okHttpClient = new OkHttpClient();
         Request request = new Request.Builder()

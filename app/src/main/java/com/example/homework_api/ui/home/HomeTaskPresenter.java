@@ -5,6 +5,7 @@ import android.text.TextUtils;
 public class HomeTaskPresenter implements HomeTaskContract.Presenter {
 
     HomeTaskContract.View view;
+    final String catImageUrl = "https://cataas.com/cat?json";
 
     public HomeTaskPresenter(HomeTaskContract.View view) {
         this.view = view;
@@ -12,8 +13,6 @@ public class HomeTaskPresenter implements HomeTaskContract.Presenter {
 
     @Override
     public void sendText(String text) {
-        String catImageUrl = "https://cataas.com/cat?json";
-
         if(TextUtils.isEmpty(text)) {
             view.onError("Недостаточно символов!!!");
         } else {
