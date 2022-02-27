@@ -66,18 +66,12 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
     }
 
     @Override
-    public void onSuccess(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onError(String message) {
-        Toast.makeText(getActivity(),message,Toast.LENGTH_LONG).show();
-    }
-
-    @Override
     public void showResult(String uploadFact) {
         System.out.println("FACTSSS: " + uploadFact);
-        textFact.setText(uploadFact);
+        if (getActivity() != null) {
+            getActivity().runOnUiThread(() -> {//запускаем UI thread для того, чтобы устанавливать элементы в UI потоке
+                textFact.setText(uploadFact);
+            });
+        }
     }
 }

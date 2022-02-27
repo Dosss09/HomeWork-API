@@ -1,19 +1,14 @@
 package com.example.homework_api.ui.dashboard;
 
-public class DashboardPresenter implements DashboardContract.Presenter {
+public class DashboardPresenter implements DashboardContract.Presenter, FactListener {
 
     private DashboardContract.View view;
     private DashboardContract.Repository repository;
     private static String URL = "https://catfact.ninja/fact";
-    private String facts;
 
     public DashboardPresenter(DashboardContract.View view) {
         this.view = view;
-        this.repository = new FactRepository();
-    }
-
-    public DashboardPresenter(DashboardContract.Repository factRepository) {
-
+        this.repository = new FactRepository(this);
     }
 
     @Override
@@ -22,8 +17,15 @@ public class DashboardPresenter implements DashboardContract.Presenter {
     }
 
     @Override
-    public void downloadFact(String fact) {
+    public void onSuccess(String fact) {
+        //имплементируем метод слушателя
+        //получаем текст, который вернулся в ответе, передаём его дальше на вью
         System.out.println("Facts " + fact);
         view.showResult(fact);
+    }
+
+    @Override
+    public void onError() {
+        //handle error
     }
 }
