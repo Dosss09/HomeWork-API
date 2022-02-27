@@ -8,6 +8,11 @@ public interface DashboardContract {
     }
 
     interface Presenter {
-        void uploadText();
+        void uploadLinks();
+        void downloadFact(String fact);
+    }
+
+    interface Repository {
+        void loadFact(String fact);
     }
 }

@@ -2,6 +2,7 @@ package com.example.homework_api.ui.dashboard;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,11 +29,12 @@ import java.net.URL;
 
 public class DashboardFragment extends Fragment implements DashboardContract.View {
 
+    private static final String TAG = "";
     private FragmentDashboardBinding binding;
     private Button btn;
     private TextView textFact;
 
-    DashboardContract.Presenter presenter;
+    private DashboardContract.Presenter presenter;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -50,7 +52,7 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                presenter.uploadText();
+                presenter.uploadLinks();
             }
         });
 
@@ -74,7 +76,8 @@ public class DashboardFragment extends Fragment implements DashboardContract.Vie
     }
 
     @Override
-    public void showResult(String uploadText) {
-        textFact.setText(uploadText);
+    public void showResult(String uploadFact) {
+        System.out.println("FACTSSS: " + uploadFact);
+        textFact.setText(uploadFact);
     }
 }
